@@ -31,7 +31,7 @@ export function MenuDisplay({
         <p className="text-orange-600/80">AI が提案した栄養バランスの良い献立です</p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-3">
+      <div className="space-y-6">
         <DishCard dish={menu.mainDish} title="主菜" icon="🍖" />
         <DishCard dish={menu.sideDish} title="副菜" icon="🥗" />
         <DishCard dish={menu.soup} title="汁物" icon="🍲" />
