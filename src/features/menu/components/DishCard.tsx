@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Dish } from "../types";
+import { useState } from 'react';
+import { Dish } from '../types';
 
 interface DishCardProps {
   dish: Dish;
@@ -31,11 +31,11 @@ export function DishCard({ dish, title, icon }: DishCardProps) {
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-400 to-amber-400 text-white font-semibold text-sm rounded-xl hover:from-orange-500 hover:to-amber-500 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
         >
-          <span>{isExpanded ? "📝" : ""}</span>
-          {isExpanded ? "詳細を閉じる" : "レシピを見る"}
+          <span>{isExpanded ? '📝' : ''}</span>
+          {isExpanded ? '詳細を閉じる' : 'レシピを見る'}
           <svg
             className={`h-4 w-4 transform transition-transform duration-200 ${
-              isExpanded ? "rotate-180" : ""
+              isExpanded ? 'rotate-180' : ''
             }`}
             fill="none"
             viewBox="0 0 24 24"

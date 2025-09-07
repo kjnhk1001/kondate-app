@@ -1,6 +1,7 @@
 # Codebase Structure
 
 ## Directory Structure
+
 ```
 src/
 ├── app/                # Next.js App Router
@@ -30,6 +31,7 @@ src/
 ```
 
 ## Key Architecture Patterns
+
 - **Feature-based organization**: Each domain (auth, menu) has its own directory
 - **Separation of concerns**: UI components separate from business logic
 - **Type safety**: Comprehensive TypeScript with Zod validation

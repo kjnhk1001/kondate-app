@@ -1,6 +1,7 @@
 # Suggested Development Commands
 
 ## Development Workflow
+
 ```bash
 # Start development server with Turbopack
 npm run dev
@@ -16,6 +17,7 @@ npm run lint
 ```
 
 ## Database Operations
+
 ```bash
 # Generate Prisma client after schema changes
 npx prisma generate
@@ -31,6 +33,7 @@ npx prisma db push --force-reset
 ```
 
 ## Git Workflow
+
 ```bash
 # Standard git operations on macOS
 git status
@@ -40,6 +43,7 @@ git push origin main
 ```
 
 ## System Utilities (macOS)
+
 ```bash
 # File operations
 ls -la          # List files with details
@@ -49,6 +53,7 @@ open .          # Open current directory in Finder
 ```
 
 ## Environment Setup
+
 - Uses **mise** for tool management (see mise.toml)
 - Ensure PostgreSQL is running for database operations
 - Environment variables needed: DATABASE_URL, NEXTAUTH_SECRET, NEXTAUTH_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, OPENAI_API_KEY
