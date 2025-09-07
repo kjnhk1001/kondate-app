@@ -29,7 +29,7 @@ export function MenuDisplay({ menu, onRetry, isRetrying }: MenuDisplayProps) {
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="space-y-6">
           <DishCard dish={menu.mainDish} title="主菜" icon="🍖" />
           <DishCard dish={menu.sideDish} title="副菜" icon="🥗" />
           <DishCard dish={menu.soup} title="汁物" icon="🍲" />
@@ -63,13 +63,13 @@ export function MenuDisplay({ menu, onRetry, isRetrying }: MenuDisplayProps) {
             買い物リストを作成
           </button>
         </div>
-      </div>
 
-      <ShoppingListModal
-        menu={menu}
-        isOpen={isShoppingListOpen}
-        onClose={() => setIsShoppingListOpen(false)}
-      />
+        <ShoppingListModal
+          menu={menu}
+          isOpen={isShoppingListOpen}
+          onClose={() => setIsShoppingListOpen(false)}
+        />
+      </div>
     </>
   );
 }
