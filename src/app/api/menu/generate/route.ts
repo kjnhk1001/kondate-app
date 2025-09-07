@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { generateMenu } from "@/features/menu/lib/generateMenu";
-import { MenuGenerationRequest } from "@/features/menu/types";
+import { NextRequest, NextResponse } from 'next/server';
+import { generateMenu } from '@/features/menu/lib/generateMenu';
+import { MenuGenerationRequest } from '@/features/menu/types';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     if (!body.ingredients || body.ingredients.length === 0) {
       return NextResponse.json(
-        { error: "食材を入力してください" },
+        { error: '食材を入力してください' },
         { status: 400 }
       );
     }
@@ -22,11 +22,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(menu);
   } catch (error) {
-    console.error("Menu generation error:", error);
-    const errorMessage = error instanceof Error ? error.message : "献立の生成に失敗しました";
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
+    console.error('Menu generation error:', error);
+    const errorMessage =
+      error instanceof Error ? error.message : '献立の生成に失敗しました';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

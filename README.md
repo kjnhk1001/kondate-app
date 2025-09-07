@@ -59,7 +59,7 @@ http://localhost:3000 でアプリにアクセスできます。
 src/
 ├── app/                # Next.js App Router
 │   ├── api/            # API Routes
-│   ├── globals.css     # グローバルスタイル  
+│   ├── globals.css     # グローバルスタイル
 │   ├── layout.tsx      # レイアウト
 │   └── page.tsx        # メインページ
 ├── features/           # 機能別コンポーネント

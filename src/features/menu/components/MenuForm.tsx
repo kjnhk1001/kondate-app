@@ -70,7 +70,10 @@ export function MenuForm({ onSubmit, isLoading }: MenuFormProps) {
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-8">
       <div>
-        <label htmlFor="newIngredient" className="block text-sm font-semibold text-orange-800 mb-2">
+        <label
+          htmlFor="newIngredient"
+          className="block text-sm font-semibold text-orange-800 mb-2"
+        >
           <span className="flex items-center gap-2">
             <span>🥕</span>
             食材を追加 *
@@ -98,7 +101,7 @@ export function MenuForm({ onSubmit, isLoading }: MenuFormProps) {
         <p className="mt-2 text-sm text-orange-600/80">
           1つずつ食材を入力して追加ボタンを押してください（Enterキーでも追加可能）
         </p>
-        
+
         {/* 追加された食材の表示 */}
         {ingredients.length > 0 && (
           <div className="mt-4 p-4 bg-white/70 backdrop-blur-sm rounded-xl border border-orange-100">
@@ -130,7 +133,10 @@ export function MenuForm({ onSubmit, isLoading }: MenuFormProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="cuisine" className="block text-sm font-semibold text-orange-800 mb-2">
+          <label
+            htmlFor="cuisine"
+            className="block text-sm font-semibold text-orange-800 mb-2"
+          >
             <span className="flex items-center gap-2">
               <span>🍜</span>
               ジャンル
@@ -151,7 +157,10 @@ export function MenuForm({ onSubmit, isLoading }: MenuFormProps) {
         </div>
 
         <div>
-          <label htmlFor="cookingTime" className="block text-sm font-semibold text-orange-800 mb-2">
+          <label
+            htmlFor="cookingTime"
+            className="block text-sm font-semibold text-orange-800 mb-2"
+          >
             <span className="flex items-center gap-2">
               <span>⏰</span>
               調理時間

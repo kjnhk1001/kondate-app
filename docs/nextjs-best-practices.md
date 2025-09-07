@@ -164,8 +164,8 @@ export default async function PostsPage() {
 // 並列データフェッチ
 async function getPostAndComments(id: string) {
   const [post, comments] = await Promise.all([
-    fetch(`/api/posts/${id}`).then((res) => res.json()),
-    fetch(`/api/posts/${id}/comments`).then((res) => res.json()),
+    fetch(`/api/posts/${id}`).then(res => res.json()),
+    fetch(`/api/posts/${id}/comments`).then(res => res.json()),
   ]);
 
   return { post, comments };
@@ -173,8 +173,8 @@ async function getPostAndComments(id: string) {
 
 // 順次データフェッチ（依存関係がある場合）
 async function getUserAndPosts(userId: string) {
-  const user = await fetch(`/api/users/${userId}`).then((res) => res.json());
-  const posts = await fetch(`/api/users/${userId}/posts`).then((res) =>
+  const user = await fetch(`/api/users/${userId}`).then(res => res.json());
+  const posts = await fetch(`/api/users/${userId}/posts`).then(res =>
     res.json()
   );
 
@@ -186,18 +186,18 @@ async function getUserAndPosts(userId: string) {
 
 ```typescript
 // app/api/posts/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get("query");
+  const query = searchParams.get('query');
 
   try {
     // データベースクエリ
     const posts = await db.post.findMany({
       where: query
         ? {
-            title: { contains: query, mode: "insensitive" },
+            title: { contains: query, mode: 'insensitive' },
           }
         : {},
     });
@@ -205,7 +205,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(posts);
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: 'Internal Server Error' },
       { status: 500 }
     );
   }
@@ -226,13 +226,13 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Validation failed", details: error.errors },
+        { error: 'Validation failed', details: error.errors },
         { status: 400 }
       );
     }
 
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: 'Internal Server Error' },
       { status: 500 }
     );
   }
@@ -632,18 +632,18 @@ export default function GlobalError({
 
 ```typescript
 // lib/validations/post.ts
-import { z } from "zod";
+import { z } from 'zod';
 
 export const createPostSchema = z.object({
-  title: z.string().min(1, "Title is required").max(100, "Title too long"),
-  content: z.string().min(10, "Content must be at least 10 characters"),
-  tags: z.array(z.string()).max(5, "Maximum 5 tags allowed"),
+  title: z.string().min(1, 'Title is required').max(100, 'Title too long'),
+  content: z.string().min(10, 'Content must be at least 10 characters'),
+  tags: z.array(z.string()).max(5, 'Maximum 5 tags allowed'),
 });
 
 export type CreatePostInput = z.infer<typeof createPostSchema>;
 
 // app/api/posts/route.ts
-import { createPostSchema } from "@/lib/validations/post";
+import { createPostSchema } from '@/lib/validations/post';
 
 export async function POST(request: NextRequest) {
   try {
@@ -657,13 +657,13 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Validation failed", details: error.errors },
+        { error: 'Validation failed', details: error.errors },
         { status: 400 }
       );
     }
 
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: 'Internal Server Error' },
       { status: 500 }
     );
   }
@@ -674,7 +674,7 @@ export async function POST(request: NextRequest) {
 
 ```typescript
 // lib/rate-limit.ts
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
 const rateLimit = new Map();
 
@@ -683,7 +683,7 @@ export function rateLimiter(
   limit: number = 5,
   windowMs: number = 60000
 ) {
-  const ip = request.ip || "anonymous";
+  const ip = request.ip || 'anonymous';
   const now = Date.now();
   const windowStart = now - windowMs;
 
@@ -705,7 +705,7 @@ export function rateLimiter(
 // app/api/posts/route.ts
 export async function POST(request: NextRequest) {
   if (!rateLimiter(request)) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
   }
 
   // 処理続行
@@ -745,13 +745,13 @@ describe("Button", () => {
 
 ```typescript
 // __tests__/api/posts.test.ts
-import { createMocks } from "node-mocks-http";
-import handler from "@/app/api/posts/route";
+import { createMocks } from 'node-mocks-http';
+import handler from '@/app/api/posts/route';
 
-describe("/api/posts", () => {
-  it("returns posts", async () => {
+describe('/api/posts', () => {
+  it('returns posts', async () => {
     const { req, res } = createMocks({
-      method: "GET",
+      method: 'GET',
     });
 
     await handler(req, res);
@@ -773,25 +773,25 @@ describe("/api/posts", () => {
 
 ```typescript
 // e2e/posts.spec.ts
-import { test, expect } from "@playwright/test";
+import { test, expect } from '@playwright/test';
 
-test.describe("Posts Page", () => {
-  test("should display posts list", async ({ page }) => {
-    await page.goto("/posts");
+test.describe('Posts Page', () => {
+  test('should display posts list', async ({ page }) => {
+    await page.goto('/posts');
 
     await expect(page).toHaveTitle(/Posts/);
     await expect(page.locator('[data-testid="post-item"]')).toHaveCount(10);
   });
 
-  test("should create new post", async ({ page }) => {
-    await page.goto("/posts/new");
+  test('should create new post', async ({ page }) => {
+    await page.goto('/posts/new');
 
-    await page.fill('[data-testid="title-input"]', "Test Post");
-    await page.fill('[data-testid="content-textarea"]', "This is a test post");
+    await page.fill('[data-testid="title-input"]', 'Test Post');
+    await page.fill('[data-testid="content-textarea"]', 'This is a test post');
     await page.click('[data-testid="submit-button"]');
 
     await expect(page).toHaveURL(/\/posts\//);
-    await expect(page.locator("h1")).toContainText("Test Post");
+    await expect(page.locator('h1')).toContainText('Test Post');
   });
 });
 ```
@@ -866,18 +866,18 @@ export const logger = {
 };
 
 // app/api/posts/route.ts
-import { logger } from "@/lib/logger";
+import { logger } from '@/lib/logger';
 
 export async function POST(request: NextRequest) {
   try {
-    logger.info("Creating new post");
+    logger.info('Creating new post');
     // 処理
-    logger.info("Post created successfully", { postId: post.id });
+    logger.info('Post created successfully', { postId: post.id });
     return NextResponse.json(post);
   } catch (error) {
-    logger.error("Failed to create post", error as Error);
+    logger.error('Failed to create post', error as Error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: 'Internal Server Error' },
       { status: 500 }
     );
   }

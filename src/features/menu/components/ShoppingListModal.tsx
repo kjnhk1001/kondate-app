@@ -2,7 +2,12 @@
 
 import { useState } from 'react';
 import { Menu, ShoppingList, IngredientCategory } from '../types';
-import { generateShoppingList, extractIngredientsFromMenu, parseIngredient, formatShoppingListText } from '../lib/generateShoppingList';
+import {
+  generateShoppingList,
+  extractIngredientsFromMenu,
+  parseIngredient,
+  formatShoppingListText,
+} from '../lib/generateShoppingList';
 
 interface ShoppingListModalProps {
   menu: Menu;
@@ -10,21 +15,25 @@ interface ShoppingListModalProps {
   onClose: () => void;
 }
 
-export function ShoppingListModal({ menu, isOpen, onClose }: ShoppingListModalProps) {
+export function ShoppingListModal({
+  menu,
+  isOpen,
+  onClose,
+}: ShoppingListModalProps) {
   const [step, setStep] = useState<1 | 2>(1);
   const [ownedIngredients, setOwnedIngredients] = useState<string[]>([]);
   const [shoppingList, setShoppingList] = useState<ShoppingList | null>(null);
 
   // 献立から全食材を抽出
-  const allIngredients = extractIngredientsFromMenu(menu).map(item => 
-    parseIngredient(item.ingredient).name
+  const allIngredients = extractIngredientsFromMenu(menu).map(
+    item => parseIngredient(item.ingredient).name
   );
-  
+
   // 重複を除去
   const uniqueIngredients = Array.from(new Set(allIngredients));
 
   const handleIngredientToggle = (ingredient: string) => {
-    setOwnedIngredients(prev => 
+    setOwnedIngredients(prev =>
       prev.includes(ingredient)
         ? prev.filter(item => item !== ingredient)
         : [...prev, ingredient]
@@ -39,21 +48,21 @@ export function ShoppingListModal({ menu, isOpen, onClose }: ShoppingListModalPr
 
   const handleItemCheck = (itemId: string) => {
     if (!shoppingList) return;
-    
+
     const updatedItems = shoppingList.items.map(item =>
       item.id === itemId ? { ...item, checked: !item.checked } : item
     );
-    
+
     setShoppingList({
       ...shoppingList,
       items: updatedItems,
-      checkedItems: updatedItems.filter(item => item.checked).length
+      checkedItems: updatedItems.filter(item => item.checked).length,
     });
   };
 
   const handleCopyList = async () => {
     if (!shoppingList) return;
-    
+
     try {
       const text = formatShoppingListText(shoppingList);
       await navigator.clipboard.writeText(text);
@@ -108,19 +117,27 @@ export function ShoppingListModal({ menu, isOpen, onClose }: ShoppingListModalPr
         {/* Step Indicator */}
         <div className="bg-orange-50 px-6 py-3 border-b">
           <div className="flex items-center gap-4">
-            <div className={`flex items-center gap-2 ${step === 1 ? 'text-orange-600 font-semibold' : 'text-gray-500'}`}>
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-sm ${
-                step === 1 ? 'bg-orange-600 text-white' : 'bg-gray-300'
-              }`}>
+            <div
+              className={`flex items-center gap-2 ${step === 1 ? 'text-orange-600 font-semibold' : 'text-gray-500'}`}
+            >
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center text-sm ${
+                  step === 1 ? 'bg-orange-600 text-white' : 'bg-gray-300'
+                }`}
+              >
                 1
               </div>
               <span>所有食材選択</span>
             </div>
             <div className="w-8 h-px bg-gray-300"></div>
-            <div className={`flex items-center gap-2 ${step === 2 ? 'text-orange-600 font-semibold' : 'text-gray-500'}`}>
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-sm ${
-                step === 2 ? 'bg-orange-600 text-white' : 'bg-gray-300'
-              }`}>
+            <div
+              className={`flex items-center gap-2 ${step === 2 ? 'text-orange-600 font-semibold' : 'text-gray-500'}`}
+            >
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center text-sm ${
+                  step === 2 ? 'bg-orange-600 text-white' : 'bg-gray-300'
+                }`}
+              >
                 2
               </div>
               <span>買い物リスト</span>
@@ -129,7 +146,10 @@ export function ShoppingListModal({ menu, isOpen, onClose }: ShoppingListModalPr
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto" style={{ maxHeight: 'calc(80vh - 200px)' }}>
+        <div
+          className="p-6 overflow-y-auto"
+          style={{ maxHeight: 'calc(80vh - 200px)' }}
+        >
           {step === 1 ? (
             <div className="space-y-6">
               <div>
@@ -187,20 +207,28 @@ export function ShoppingListModal({ menu, isOpen, onClose }: ShoppingListModalPr
                       買い物リスト ({shoppingList.totalItems}個の食材)
                     </h3>
                     <div className="text-sm text-gray-600">
-                      完了: {shoppingList.checkedItems} / {shoppingList.totalItems}
+                      完了: {shoppingList.checkedItems} /{' '}
+                      {shoppingList.totalItems}
                     </div>
                   </div>
 
                   {/* Category Groups */}
                   {Object.values(IngredientCategory).map(category => {
-                    const categoryItems = shoppingList.items.filter(item => item.category === category);
+                    const categoryItems = shoppingList.items.filter(
+                      item => item.category === category
+                    );
                     if (categoryItems.length === 0) return null;
 
                     return (
-                      <div key={category} className="border border-gray-200 rounded-lg overflow-hidden">
+                      <div
+                        key={category}
+                        className="border border-gray-200 rounded-lg overflow-hidden"
+                      >
                         <div className="bg-gray-50 px-4 py-3 border-b">
                           <h4 className="font-semibold text-gray-800 flex items-center gap-2">
-                            <span className="text-lg">{getCategoryIcon(category)}</span>
+                            <span className="text-lg">
+                              {getCategoryIcon(category)}
+                            </span>
                             {category} ({categoryItems.length})
                           </h4>
                         </div>
@@ -217,14 +245,22 @@ export function ShoppingListModal({ menu, isOpen, onClose }: ShoppingListModalPr
                                 className="w-5 h-5 text-green-600 rounded focus:ring-green-500"
                               />
                               <div className="flex-1">
-                                <span className={`font-medium ${
-                                  item.checked ? 'text-gray-500 line-through' : 'text-gray-800'
-                                }`}>
+                                <span
+                                  className={`font-medium ${
+                                    item.checked
+                                      ? 'text-gray-500 line-through'
+                                      : 'text-gray-800'
+                                  }`}
+                                >
                                   {item.ingredient}
                                 </span>
-                                <span className={`ml-2 ${
-                                  item.checked ? 'text-gray-400 line-through' : 'text-gray-600'
-                                }`}>
+                                <span
+                                  className={`ml-2 ${
+                                    item.checked
+                                      ? 'text-gray-400 line-through'
+                                      : 'text-gray-600'
+                                  }`}
+                                >
                                   ({item.amount})
                                 </span>
                                 <div className="text-xs text-gray-500 mt-1">
